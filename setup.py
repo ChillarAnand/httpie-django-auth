@@ -6,7 +6,7 @@ author = 'Chillar Anand'
 author_email = 'anand21nanda@gmail.com'
 
 
-with open('README.md') as fh:
+with open('README.rst') as fh:
     long_description = fh.read()
 
 setup(
