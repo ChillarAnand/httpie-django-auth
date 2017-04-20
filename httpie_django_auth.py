@@ -22,7 +22,10 @@ def get_session_file(domain, session_name):
 
 def clean_session(domain, session_name):
     file_path = get_session_file(domain, session_name)
-    os.remove(file_path)
+    try:
+        os.remove(file_path)
+    except OSError:
+        pass
 
 
 class DjangoAuth(builtin.HTTPBasicAuth):
