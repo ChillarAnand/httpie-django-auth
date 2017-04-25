@@ -28,6 +28,11 @@ def clean_session(domain, session_name):
         pass
 
 
+def run_shell_command(cmd):
+    print(cmd)
+    subprocess.check_output(shlex.split(cmd))
+
+
 class DjangoAuth(builtin.HTTPBasicAuth):
     def __init__(self, username, password):
         self.username = username
@@ -40,17 +45,17 @@ class DjangoAuth(builtin.HTTPBasicAuth):
         domain = result.netloc
 
         login_url = '{}://{}{}'.format(scheme, domain, auth_endpoint)
-        print('LOGIN URL: {}'.format(login_url))
 
         clean_session(domain, self.session_name)
         cmd = 'http GET {} --session={}'.format(login_url, self.session_name)
-        subprocess.check_output(shlex.split(cmd))
+        run_shell_command(cmd)
 
         session = json.load(open(get_session_file(domain, self.session_name)))
         csrf_token = session['cookies']['csrftoken']['value']
         cmd = 'http -f POST {} username={} passowrd={} X-CSRFToken:{} --session={}'.format(
             login_url, self.username, self.password, csrf_token, self.session_name
         )
+        run_shell_command(cmd)
         return r
 
 
