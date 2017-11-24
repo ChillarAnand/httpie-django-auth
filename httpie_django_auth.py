@@ -6,7 +6,10 @@ import json
 import os
 import shlex
 import subprocess
-from urllib.parse import urlsplit
+try:
+    from urllib.parse import urlsplit
+except ImportError:
+    from urlparse import urlsplit
 
 from httpie.plugins import AuthPlugin, builtin
 
