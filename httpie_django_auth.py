@@ -6,7 +6,10 @@ import json
 import os
 import shlex
 import subprocess
-from urllib.parse import urlsplit
+try:
+    from urllib.parse import urlsplit
+except ImportError:
+    from urlparse import urlsplit
 
 from httpie.plugins import AuthPlugin, builtin
 
@@ -52,7 +55,7 @@ class DjangoAuth(builtin.HTTPBasicAuth):
 
         session = json.load(open(get_session_file(domain, self.session_name)))
         csrf_token = session['cookies']['csrftoken']['value']
-        cmd = 'http -f POST {} username={} passowrd={} X-CSRFToken:{} --session={}'.format(
+        cmd = 'http -f POST {} username={} password={} X-CSRFToken:{} --session={}'.format(
             login_url, self.username, self.password, csrf_token, self.session_name
         )
         run_shell_command(cmd)
