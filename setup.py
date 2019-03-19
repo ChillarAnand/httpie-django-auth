@@ -11,7 +11,7 @@ with open('README.rst') as fh:
 
 setup(
     name='httpie-django-auth',
-    version='0.1.1',
+    version='0.1.2',
     description='django Auth plugin for HTTPie.',
     long_description=long_description,
 
